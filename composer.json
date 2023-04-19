@@ -1,0 +1,33 @@
+{
+    "name": "indykoning/grumphp-duster",
+    "description": "A Duster task for GrumPHP.",
+    "type": "plugin",
+    "keywords": [
+        "indykoning",
+        "laravel",
+        "grumphp",
+        "quality",
+        "phpcsfixer",
+        "pint",
+        "duster",
+        "linter"
+    ],
+    "license": "MIT",
+    "require": {
+        "phpro/grumphp": "*",
+        "tightenco/duster": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Indykoning\\GrumPHPDuster\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpro/grumphp": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace Indykoning\GrumPHPDuster;
 
 use GrumPHP\Fixer\Provider\FixableProcessResultProvider;
+use GrumPHP\Formatter\ProcessFormatterInterface;
 use GrumPHP\Runner\TaskResult;
 use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\AbstractExternalTask;
+use GrumPHP\Task\Config\ConfigOptionsResolver;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\Context\GitPreCommitContext;
 use GrumPHP\Task\Context\RunContext;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Process\Process;
 
+/**
+ * Prettier task.
+ *
+ * @extends AbstractExternalTask<ProcessFormatterInterface>
+ */
 class DusterTask extends AbstractExternalTask
 {
     public function getName(): string
@@ -21,7 +28,7 @@ class DusterTask extends AbstractExternalTask
         return 'duster';
     }
 
-    public static function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): ConfigOptionsResolver
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
@@ -32,7 +39,9 @@ class DusterTask extends AbstractExternalTask
         $resolver->addAllowedTypes('triggered_by', ['array']);
         $resolver->addAllowedTypes('ignore_patterns', ['array']);
 
-        return $resolver;
+        return ConfigOptionsResolver::fromClosure(
+            static fn (array $options): array => $resolver->resolve($options)
+        );
     }
 
     public function canRunInContext(ContextInterface $context): bool

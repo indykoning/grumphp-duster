@@ -14,7 +14,7 @@
     ],
     "license": "MIT",
     "require": {
-        "phpro/grumphp": "*",
+        "phpro/grumphp": "^2.0.0",
         "tightenco/duster": "*"
     },
     "autoload": {
